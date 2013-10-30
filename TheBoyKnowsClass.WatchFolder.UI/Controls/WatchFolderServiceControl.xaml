@@ -1,0 +1,151 @@
+﻿<UserControl x:Class="TheBoyKnowsClass.WatchFolder.UI.Controls.WatchFolderServiceControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModel="clr-namespace:TheBoyKnowsClass.WatchFolder.UI.ViewModel"
+             xmlns:converters="clr-namespace:TheBoyKnowsClass.Common.UI.WPF.Converters;assembly=TheBoyKnowsClass.Common.UI.WPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600" DataContext="{Binding Path=WatchFolderServices, RelativeSource={RelativeSource Self}}">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ServiceComboBoxDataTemplate" DataType="{x:Type viewModel:WatchFolderServiceViewModel}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding Path=Host}" />
+                <TextBlock Grid.Column="1" Text=":" />
+                <TextBlock Grid.Column="2" Text="{Binding Path=Port}" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="WatchFoldersListBoxDataTemplate" DataType="{x:Type viewModel:WatchFolderSettingsViewModel}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding Path=Name}" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="TaskEnginesListBoxDataTemplate" DataType="{x:Type viewModel:TaskEngineSettingsViewModel}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding Path=TypeName}" />
+            </Grid>
+        </DataTemplate>
+        <converters:ButtonIconOpacityConverter x:Key="ButtonIconOpacityConverter" />
+        <converters:CursorConverter x:Key="CursorConverter" />
+    </UserControl.Resources>
+    <Grid Cursor="{Binding IsFinding, Converter={StaticResource CursorConverter}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <GroupBox Grid.Row="0" Header="SystemServiceViewModel Settings" Name="ControllerSettingsGroupBox">
+            <Grid>
+                <Grid MinWidth="200">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Height="28" Name="ServiceLabel" Content="SystemServiceViewModel:" />
+                    <ComboBox Grid.Column="1" Height="23" Margin="3.5" Name="ServiceComboBox" MinWidth="120" ItemTemplate="{StaticResource ServiceComboBoxDataTemplate}" ItemsSource="{Binding Services}"  IsEnabled="{Binding HasItems}" SelectedItem="{Binding SelectedWatchFolderServiceViewModel}" />
+                    <Button Grid.Column="2" Command="{Binding FindServicesCommand}" ToolTip="Search for SystemServiceViewModels" IsEnabled="{Binding IsNotFinding}">
+                        <Image Source="..\Resources\Search.png" Height="24" Margin="1" Opacity="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource ButtonIconOpacityConverter}}" ToolTip="Search for WatchFolder services" />
+                    </Button>
+                </Grid>
+            </Grid>
+        </GroupBox>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <GroupBox  Grid.Column="0" Header="Watch Folders" Name="WatchFoldersGroupBox" IsEnabled="{Binding IsServiceSelected}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <ListView ItemsSource="{Binding SelectedWatchFolderServiceViewModel.WatchFoldersSettings}" ItemTemplate="{StaticResource WatchFoldersListBoxDataTemplate}">
+
+                    </ListView>
+                    <StackPanel Grid.Column="1">
+                        <Button Name="AddWatchFolderButton" Margin="3 0 0 3" >
+                            <Image Source="..\Resources\Plus.png" Height="24" Margin="1" Opacity="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource ButtonIconOpacityConverter}}" />
+                        </Button>
+                        <Button Name="RemoveWatchFolderButton" Margin="3 0 0 3" IsEnabled="{Binding Path=SelectedWatchFolderServiceViewModel.IsWatchFolderSettingsSelected}">
+                            <Image Source="..\Resources\Minus.png" Height="24" Margin="1" Opacity="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource ButtonIconOpacityConverter}}" />
+                        </Button>
+                        <Button Name="EditWatchFolderButton" Margin="3 0 0 3" IsEnabled="{Binding Path=SelectedWatchFolderServiceViewModel.IsWatchFolderSettingsSelected}">
+                            <Image Source="..\Resources\Options.png" Height="24" Margin="1" Opacity="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource ButtonIconOpacityConverter}}" />
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+            <GroupBox  Grid.Column="1" Header="Watch Folder Settings" Name="WatchFolderSettingsGroupBox" IsEnabled="{Binding IsServiceSelected}">
+                <Grid IsEnabled="{Binding SelectedWatchFolderServiceViewModel.IsWatchFolderSettingsSelected}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Content="Name:" Name="NameLabel" Grid.Column="0" Grid.Row="0" Width="120" Height="28" />
+                    <TextBox Grid.Column="1" Name="NameTextBox" Grid.Row="0" Height="23" Margin="3.5" Text="{Binding Path=SelectedWatchFolderServiceViewModel.SelectedWatchFolderSettings.Name}"/>
+                    <Label Content="Location:" Name="LocationLabel" Grid.Column="0" Grid.Row="1" Width="120" Height="28" />
+                    <TextBox Grid.Column="1" Name="LocationTextBox" Grid.Row="1" Height="23" Margin="3.5" Text="{Binding Path=SelectedWatchFolderServiceViewModel.SelectedWatchFolderSettings.FolderName}"/>
+                    <Label Content="Tick Interval:" Name="TimerIntervalLabel" Grid.Column="0" Grid.Row="2" Width="120" Height="28" />
+                    <TextBox Grid.Column="1" Name="TimerIntervalTextBox" Grid.Row="2" Height="23" Margin="3.5" Text="{Binding Path=SelectedWatchFolderServiceViewModel.SelectedWatchFolderSettings.TimerInterval}" />
+                    <Label Content="Initial Task Delay:" Name="TaskDelayLabel" Grid.Column="0" Grid.Row="3" Width="120" Height="28" />
+                    <TextBox Grid.Column="1" Name="TaskDelayTextBox" Grid.Row="3" Height="23" Margin="3.5" Text="{Binding Path=SelectedWatchFolderServiceViewModel.SelectedWatchFolderSettings.InitialTaskDelay}" />
+                    <GroupBox Header="Task Engines" Grid.Row="4" Grid.ColumnSpan="2" Name="TaskEnginesGroupBox">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <ListView Grid.Column="0" ItemsSource="{Binding SelectedWatchFolderServiceViewModel.SelectedWatchFolderSettings.TaskEngineSettings}">
+
+                            </ListView>
+                            <StackPanel Grid.Column="1">
+                                <Button Name="AddTaskEngineButton" Margin="3 0 0 3" >
+                                    <Image Source="..\Resources\Plus.png" Height="24" Margin="1" Opacity="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource ButtonIconOpacityConverter}}" />
+                                </Button>
+                                <Button Name="RemoveTaskEngineButton" Margin="3 0 0 3">
+                                    <Image Source="..\Resources\Minus.png" Height="24" Margin="1" Opacity="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource ButtonIconOpacityConverter}}" />
+                                </Button>
+                                <Button Name="MoveTaskEngineUpButton" Margin="3 0 0 3">
+                                    <Image Source="..\Resources\Up.png" Height="24" Margin="1" Opacity="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource ButtonIconOpacityConverter}}" />
+                                </Button>
+                                <Button Name="MoveTaskEngineDownButton" Margin="3 0 0 3">
+                                    <Image Source="..\Resources\Down.png" Height="24" Margin="1" Opacity="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Converter={StaticResource ButtonIconOpacityConverter}}" />
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button HorizontalAlignment="Right" Grid.Column="0" Content="Save" Height="23" Name="SaveButton" Width="75" Margin="3.5" IsEnabled="{Binding HasChanges}" />
+            <Button HorizontalAlignment="Left" Grid.Column="1" Content="Cancel" Height="23" Name="CancelButton" Width="75" Margin="3.5"  IsEnabled="{Binding HasChanges}" />
+        </Grid>
+    </Grid>
+</UserControl>

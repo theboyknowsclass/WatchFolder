@@ -1,0 +1,26 @@
+﻿<controls:SystemTrayApplicationWindow x:Class="TheBoyKnowsClass.WatchFolder.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:watchFolderUiControls="clr-namespace:TheBoyKnowsClass.WatchFolder.UI.Controls"
+        Title="Who Watches The Watch Folders?" Icon="/TheBoyKnowsClass.WatchFolder.UI;component/Resources/watchmen.ico" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:TheBoyKnowsClass.Common.UI.WPF.Controls;assembly=TheBoyKnowsClass.Common.UI.WPF"
+                                      xmlns:controls1="clr-namespace:TheBoyKnowsClass.SystemServices.Common.UI.Controls;assembly=TheBoyKnowsClass.SystemServices.Common.UI"
+                                      d:DesignHeight="400" d:DesignWidth="600" SizeToContent="WidthAndHeight" MinHeight="600" MinWidth="600">
+    <Grid>
+        <TabControl Name="TabControl">
+            <TabItem Header="Settings" Name="SettingsTab" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <watchFolderUiControls:WatchFolderTraySettingsControl x:Name="WatchFolderTraySettingsControl" Grid.Row="0" />
+                    <watchFolderUiControls:WatchFolderServiceControl x:Name="WatchFolderServiceControl" Grid.Row="1" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="SystemServiceViewModel" Name="ServiceTab">
+                <controls1:SystemServiceManagerControl Name="SystemServiceManagerControl" />
+            </TabItem>
+        </TabControl>
+    </Grid>
+</controls:SystemTrayApplicationWindow>

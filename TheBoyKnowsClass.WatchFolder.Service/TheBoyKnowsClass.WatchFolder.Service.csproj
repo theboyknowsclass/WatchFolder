@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E31D75E6-3165-4EEA-99FC-379BDD40C196}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TheBoyKnowsClass.WatchFolder.Service</RootNamespace>
+    <AssemblyName>TheBoyKnowsClass.WatchFolder.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Discovery" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="SettingsService.cs" />
+    <Compile Include="SettingsServiceHost.cs" />
+    <Compile Include="WatchFolderOperations.cs" />
+    <Compile Include="WatchFolderSettingsHelper.cs" />
+    <Compile Include="WatchFolderService.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WatchFolderService.Designer.cs">
+      <DependentUpon>WatchFolderService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WatchFolderService.resx">
+      <DependentUpon>WatchFolderService.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\TheBoyKnowsClass.Common.Desktop\TheBoyKnowsClass.Common.Desktop.csproj">
+      <Project>{e34d840d-75c2-4043-9ae4-d01d9d1b6df6}</Project>
+      <Name>TheBoyKnowsClass.Common.Desktop</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\TheBoyKnowsClass.Common\TheBoyKnowsClass.Common.csproj">
+      <Project>{DB5CA9D7-EF84-41E2-8C5F-57555F7D9F3D}</Project>
+      <Name>TheBoyKnowsClass.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\TheBoyKnowsClass.FolderWatchers.Common\TheBoyKnowsClass.FolderWatchers.Common.csproj">
+      <Project>{49864f5e-f708-42cc-804a-30fb19e42ab3}</Project>
+      <Name>TheBoyKnowsClass.FolderWatchers.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\TheBoyKnowsClass.Schedules.Common\TheBoyKnowsClass.Schedules.Common.csproj">
+      <Project>{8ACCF738-32D0-40E4-92ED-E2E9FA1C253F}</Project>
+      <Name>TheBoyKnowsClass.Schedules.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\TheBoyKnowsClass.Tasks.Common\TheBoyKnowsClass.Tasks.Common.csproj">
+      <Project>{9a7f59b4-0c45-4eba-9e02-10e275f883cc}</Project>
+      <Name>TheBoyKnowsClass.Tasks.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TheBoyKnowsClass.WatchFolder.Common\TheBoyKnowsClass.WatchFolder.Common.csproj">
+      <Project>{fa985cd1-d6f0-432c-aeef-74186c3bad3d}</Project>
+      <Name>TheBoyKnowsClass.WatchFolder.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
